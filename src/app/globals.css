@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Primary Colors */
+.bg-navy-blue {
+  background-color: #002B5B;
+}
+
+.text-navy-blue {
+  color: #002B5B;
+}
+
+.bg-green {
+  background-color: #00A86B;
+}
+
+.text-green {
+  color: #00A86B;
+}
+
+/* Secondary Colors */
+.bg-light-gray {
+  background-color: #E0E0E0;
+}
+
+.text-light-gray {
+  color: #E0E0E0;
+}
+
+.bg-dark-gray {
+  background-color: #333333;
+}
+
+.text-dark-gray {
+  color: #333333;
+}
+
+/* Accent Colors */
+.bg-bright-red {
+  background-color: #FF4C4C;
+}
+
+.text-bright-red {
+  color: #FF4C4C;
+}
+
+.bg-golden-yellow {
+  background-color: #FFD700;
+}
+
+.text-golden-yellow {
+  color: #FFD700;
+}
+
+/* Supporting Colors */
+.bg-sky-blue {
+  background-color: #87CEEB;
+}
+
+.text-sky-blue {
+  color: #87CEEB;
+}
+
+/* White */
+.bg-white {
+  background-color: #FFFFFF;
+}
+
+.text-white {
+  color: #FFFFFF;
+}
+
+/* Utility classes for text color and background color */
+.text-primary {
+  color: #002B5B;
+}
+
+.text-secondary {
+  color: #333333;
+}
+
+.bg-primary {
+  background-color: #002B5B;
+}
+
+.bg-secondary {
+  background-color: #E0E0E0;
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: #00A86B;
+  color: #FFFFFF;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.btn-primary:hover {
+  background-color: #007a50;
+}
+
+.btn-accent {
+  background-color: #FFD700;
+  color: #FFFFFF;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.btn-accent:hover {
+  background-color: #ccac00;
+}
+
+/* menu  */
+/* Add this CSS to your global stylesheet or within a <style> tag in your component */
+
+.menu {
+  position: fixed;
+  top: 0%;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #002B5B;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 99;
+}
+
+.menu.open {
+  left: 0;
+  z-index: 99;
+}
+
+.btn-link {
+  @apply text-white text-lg font-semibold py-4 px-6 rounded-lg text-center transition duration-300 ease-in-out transform hover:bg-blue-600 hover:scale-105;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
