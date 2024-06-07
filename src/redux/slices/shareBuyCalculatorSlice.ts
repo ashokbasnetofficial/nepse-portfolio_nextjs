@@ -1,6 +1,6 @@
 "use client";
-import { createSlice } from "@reduxjs/toolkit";
-import { BuyShareResult } from "@/interfaces/shareBuyInterface";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import ShareBuy, { BuyShareResult } from "@/interfaces/shareBuyInterface";
 const initialState: BuyShareResult = {
     total_amount: 0,
     borker_commission_amount: 0,
@@ -14,7 +14,7 @@ const buyShareSlice = createSlice({
     name: 'buy-share',
     initialState,
     reducers: {
-        buyShare(state, action) {
+        buyShare(state, action: PayloadAction<ShareBuy>) {
             const { no_share_units, share_unit_price } = action.payload;
             const total_amount = no_share_units * share_unit_price;
             const DP_fee = 25;

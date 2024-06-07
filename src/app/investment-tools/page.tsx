@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Link from 'next/link'
 import { FaChartLine } from "react-icons/fa";
 import classes from './investmentTools.module.css';
@@ -24,13 +24,13 @@ const LinkData: InvestmentToolsLinks[] = [
     {
         id: 3,
         href: 'investment-tools/loan-calculator',
-        title: 'Loan Calculator',
+        title: 'EMI Loan Calculator',
         icon: <GiReceiveMoney />
     },
     {
         id: 4,
-        href: 'investment-tools/interest-calculator',
-        title: 'Interest Calculator',
+        href: 'investment-tools/fd-interest-calculator',
+        title: 'FD Interest Calculator',
         icon: <FaPercent />
     },
     {
@@ -56,7 +56,7 @@ const InvestmentToolsPage = () => {
                 </h1>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 px-10 lg:grid-cols-3 gap-4 w-full max-w-5xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-5xl">
                 {LinkData.map((item: InvestmentToolsLinks) => {
                     return <Link key={item.id} href={item.href} className="btn-link bg-navy-blue flex items-center justify-center h-40 sm:h-30">{item.title} <span className='pl-2 lg:text-4xl md:text-3xl sm:text-2xl'>{item.icon}</span></Link>
 

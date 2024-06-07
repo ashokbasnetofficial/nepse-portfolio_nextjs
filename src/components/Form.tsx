@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import SIP from "@/interfaces/sipInterface";
 const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
@@ -22,8 +22,8 @@ const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
     }
 
     return (
-        <form className="bg-navy-blue p-6 rounded-lg text-white max-w-md mx-auto" onSubmit={formSubmitHandler}>
-            <div className="form-group mb-4">
+        <form className="text-black max-w-md" onSubmit={formSubmitHandler}>
+            <div className="form-group mb-2">
                 <label htmlFor="investment_period_type" className="block mb-2">Investment period</label>
                 <select
                     name="investment_period_type"
@@ -38,7 +38,7 @@ const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
                     <option value='annually'>Annually</option>
                 </select>
             </div>
-            <div className="form-group mb-4">
+            <div className="form-group mb-2">
                 <label htmlFor="investment_amount" className="block mb-2">Investment amount</label>
                 <input
                     type="number"
@@ -49,7 +49,7 @@ const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
                     onChange={handleChange}
                 />
             </div>
-            <div className="form-group mb-4">
+            <div className="form-group mb-2">
                 <label htmlFor="annual_return" className="block mb-2">Expected annual return</label>
                 <input
                     type="number"
@@ -59,7 +59,7 @@ const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
                     onChange={handleChange}
                 />
             </div>
-            <div className="form-group mb-4">
+            <div className="form-group mb-2">
                 <label htmlFor="total_investment_period" className="block mb-2">Years</label>
                 <input
                     type="number"
@@ -70,7 +70,7 @@ const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
                 />
             </div>
             <button type="submit" className="bg-green text-white py-2 px-4 rounded hover:bg-green-dark">
-                Submit
+                Calculate
             </button>
         </form>
     )

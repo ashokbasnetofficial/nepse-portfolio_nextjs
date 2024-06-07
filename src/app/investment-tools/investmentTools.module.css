@@ -27,3 +27,26 @@
     margin-left: -50px;
     background-color: #002B5B;
 }
+/* heading styles two  */
+.custom_heading_two:before {
+  margin-top:50px;
+  width: 100%;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  height: 2px;
+  width: 55px;
+  background-color: #002B5B;
+  z-index: 99;
+}
+
+.custom_heading_two:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  height: 1px;
+  width: 100%;
+  background-color: #b4b4b4;
+}

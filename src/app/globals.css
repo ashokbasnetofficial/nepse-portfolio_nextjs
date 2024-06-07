@@ -71,7 +71,6 @@
   color: #FFFFFF;
 }
 
-/* Utility classes for text color and background color */
 .text-primary {
   color: #002B5B;
 }
@@ -111,8 +110,6 @@
   background-color: #ccac00;
 }
 
-/* menu  */
-/* Add this CSS to your global stylesheet or within a <style> tag in your component */
 
 .menu {
   position: fixed;
