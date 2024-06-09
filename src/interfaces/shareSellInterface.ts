@@ -8,7 +8,7 @@ export default interface shareSellSummary {
     capitalGainTax: number;
     profitLoss: number;
 }
-export interface shareSell {
+export interface ShareSell {
     share_Quantity: number;
     purchase_Price: number;
     selling_Price: number;

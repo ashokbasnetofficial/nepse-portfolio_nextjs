@@ -1,29 +1,44 @@
-"use client";
-import EMIData, { EMISummary } from "@/interfaces/emiInterface";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-const initialState: EMISummary = {
-    total_interest: 0,
-    total_payment: 0,
-    monthly_emi: 0
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface EMISummary {
+  total_interest: number;
+  total_payment: number;
+  monthly_emi: number;
 }
-const emiSlice = createSlice({
-    name: 'emi',
-    initialState,
-    reducers: {
-        calculateEmi(state, action: PayloadAction<EMIData>) {
-            const { loan_amount, interest_rate, tenure } = action.payload;
-            const monthly_interest_rate = interest_rate / 100 / 12;
-            const monthly_emi = loan_amount * monthly_interest_rate / (1 - Math.pow(1 + monthly_interest_rate, -tenure));
-            const total_interest = monthly_emi * tenure - loan_amount;
-            const total_payment = monthly_emi * tenure;
-            state.total_interest = total_interest;
-            state.total_payment = total_payment;
-            state.monthly_emi = monthly_emi;
-        }
-    }
 
+interface EMIData {
+  loan_amount: number;
+  interest_rate: number; 
+  tenure: number;
+}
+
+// Initial state
+const initialState: EMISummary = {
+  total_interest: 0,
+  total_payment: 0,
+  monthly_emi: 0
+}
+
+
+const emiSlice = createSlice({
+  name: 'emi',
+  initialState,
+  reducers: {
+    calculateEmi(state, action: PayloadAction<EMIData>) {
+      const { loan_amount, interest_rate, tenure } = action.payload;
+
+      const monthly_rate = interest_rate / (12 * 100);
+
+      const emi = (loan_amount * monthly_rate * Math.pow(1 + monthly_rate, tenure)) / 
+                  (Math.pow(1 + monthly_rate, tenure) - 1);
+      const total_payment = emi * tenure;
+      const total_interest = total_payment - loan_amount;
+      state.monthly_emi = emi;
+      state.total_payment = total_payment;
+      state.total_interest = total_interest;
+    }
+  }
 });
 
+export const emiActions = emiSlice.actions;
 export default emiSlice.reducer;
-export const emiActions = emiSlice.actions; 

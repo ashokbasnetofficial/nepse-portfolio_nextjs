@@ -1,13 +1,18 @@
 "use client";
+import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import SIP from "@/interfaces/sipInterface";
-const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
-    const [formData, setFormData] = useState<SIP>({
-        investment_period_type: '',
-        investment_amount: 0,
-        annual_return: 0,
-        total_investment_period: 0
-    });
+import { sipActions } from "@/redux/slices/sipCalSlice";
+import { AppDispatch } from "@/redux/store";
+const initialState:SIP={
+    investment_period_type: '',
+    investment_amount: 0,
+    annual_return: 0,
+    total_investment_period: 0
+}
+const SIPForm: React.FC = (props) => {
+    const dispatch=useDispatch<AppDispatch>()
+    const [formData, setFormData] = useState<SIP>(initialState);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -16,9 +21,14 @@ const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
             [name]: name === 'investment_amount' || name === 'annual_return' || name === 'total_investment_period' ? Number(value) : value
         }));
     }
+    const resetFormHandler = ()=>{
+        dispatch(sipActions.sipCalculator(initialState));   
+    }
     const formSubmitHandler = (event: React.FormEvent) => {
         event.preventDefault();
-        props.onSubmit(formData)
+        console.log(formData);
+        dispatch(sipActions.sipCalculator(formData));   
+       
     }
 
     return (
@@ -69,11 +79,15 @@ const Form: React.FC<{ onSubmit: (data: SIP) => void }> = (props) => {
                     onChange={handleChange}
                 />
             </div>
-            <button type="submit" className="bg-green text-white py-2 px-4 rounded hover:bg-green-dark">
+           <div>
+           <button type="submit" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                 Calculate
             </button>
+            <input type="reset" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-22" onClick={resetFormHandler} />
+
+           </div>
         </form>
     )
 }
 
-export default Form;
+export default SIPForm;

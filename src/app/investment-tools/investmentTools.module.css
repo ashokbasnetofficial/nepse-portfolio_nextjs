@@ -38,7 +38,7 @@
   height: 2px;
   width: 55px;
   background-color: #002B5B;
-  z-index: 99;
+  z-index: 9;
 }
 
 .custom_heading_two:after {

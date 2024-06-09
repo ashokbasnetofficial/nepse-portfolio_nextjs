@@ -11,13 +11,13 @@ import { GiReceiveMoney } from "react-icons/gi";
 const LinkData: InvestmentToolsLinks[] = [
     {
         id: 1,
-        href: 'investment-tools/sell-calculator',
+        href: 'investment-tools/share-sell-calculator',
         title: 'Sell Calculator',
         icon: <PiChartLineDownBold />
     },
     {
         id: 2,
-        href: 'investment-tools/buy-calculator',
+        href: 'investment-tools/share-buy-calculator',
         title: 'Buy Calculator',
         icon: <FaChartLine />
     },
@@ -29,7 +29,7 @@ const LinkData: InvestmentToolsLinks[] = [
     },
     {
         id: 4,
-        href: 'investment-tools/fd-interest-calculator',
+        href: 'investment-tools/fd-calculator',
         title: 'FD Interest Calculator',
         icon: <FaPercent />
     },

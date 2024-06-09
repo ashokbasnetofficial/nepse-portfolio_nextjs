@@ -13,19 +13,19 @@ const fdCalculatorSlice = createSlice({
         fdCalculator(state, action: PayloadAction<FixedDepositData>) {
             const { principal_amount, interest_rate, tenure, compound_type } = action.payload;
             let compound_time_per_year = 0;
-            if (compound_type === 'monthly') {
+            if (compound_type.toLocaleLowerCase().trim() === 'monthly') {
                 compound_time_per_year = 12;
 
             }
-            else if (compound_type === 'quarterly') {
+            else if (compound_type.toLocaleLowerCase().trim() === 'quarterly') {
                 compound_time_per_year = 4;
             }
 
-            else if (compound_type === 'semi-annual') {
+            else if (compound_type.toLocaleLowerCase().trim() === 'semi annually') {
                 compound_time_per_year = 2;
 
             }
-            else if (compound_type === 'annual') {
+            else if (compound_type.toLocaleLowerCase().trim() === 'annually') {
                 compound_time_per_year = 1;
 
             }
@@ -38,3 +38,6 @@ const fdCalculatorSlice = createSlice({
         }
     }
 })
+
+export default fdCalculatorSlice.reducer;
+export const fdActions = fdCalculatorSlice.actions;

@@ -18,14 +18,23 @@ const buyShareSlice = createSlice({
             const { no_share_units, share_unit_price } = action.payload;
             const total_amount = no_share_units * share_unit_price;
             const DP_fee = 25;
-            let broker_comission_percent = total_amount < 50000 ? 0.36 :
-                total_amount < 500000 ? 0.33 :
-                    total_amount < 2000000 ? 0.31 :
-                        total_amount < 10000000 ? 0.27 : 0.24;
+            let broker_comission_percent;
+
+            if (total_amount < 50000) {
+                broker_comission_percent = 0.0036;
+            } else if (total_amount < 500000) {
+                broker_comission_percent = 0.0033;
+            } else if (total_amount < 2000000) {
+                broker_comission_percent = 0.0031;
+            } else if (total_amount < 10000000) {
+                broker_comission_percent = 0.0027;
+            } else {
+                broker_comission_percent = 0.0024;
+            }            
             // broker commission amount
             const borker_commission_amount = total_amount * broker_comission_percent;
             // SEBON fee amount
-            const sebon_fee = total_amount * 0.015;
+            const sebon_fee = total_amount * 0.00015;
             // total pay amount with charge amount
             const total_payable_amount = total_amount + borker_commission_amount + sebon_fee + DP_fee;
             // cost price per share

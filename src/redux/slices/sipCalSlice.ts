@@ -15,7 +15,6 @@ const sipCalculatorSlice = createSlice({
             let periodsPerYear: number = 0;
             let periodicRate: number = 0;
             const { investment_period_type, investment_amount, annual_return, total_investment_period } = action.payload;
-
             switch (investment_period_type) {
                 case 'monthly':
                     periodsPerYear = 12;
@@ -49,6 +48,7 @@ const sipCalculatorSlice = createSlice({
             state.total_investment = total_investment_amount;
             state.estimated_return = total_gain;
             state.estimated_total_return = futureValue;
+          
         }
     }
 });
