@@ -20,7 +20,7 @@ console.log(isModalOpen)
 <Modal title="Add New Transcation" onClose={()=>setIsModalOpen(!isModalOpen)} isOpen={isModalOpen} >
        <AddStockForm onClose={()=>setIsModalOpen(!isModalOpen)} onSubmit={handleStockForm} />
 </Modal>
-    <div className="mt-5 w-full flex flex-col items-end">
+    <div className="mt-5 w-full flex flex-col items-end mb-4">
       <AddStockButton onClick={handleClick} />
       <StockSummary />
       <SearchStock />

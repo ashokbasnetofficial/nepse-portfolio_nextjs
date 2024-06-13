@@ -51,14 +51,14 @@ const InvestmentToolsPage = () => {
     return (
         <div className="flex flex-col items-center space-y-10 mb-5 z-0">
             <div className={`${classes.title} mt-10`}>
-                <h1 className="relative text-center text-2xl font-light text-gray-900 tracking-wide uppercase">
+                <h1 className="relative text-center text-2xl font-light text-gray-900 tracking-wide uppercase text-blue-900">
                     Investment Tools
                 </h1>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-5xl">
                 {LinkData.map((item: InvestmentToolsLinks) => {
-                    return <Link key={item.id} href={item.href} className="btn-link bg-navy-blue flex items-center justify-center h-40 sm:h-30">{item.title} <span className='pl-2 lg:text-4xl md:text-3xl sm:text-2xl'>{item.icon}</span></Link>
+                    return <Link key={item.id} href={item.href} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium uppercase rounded-lg lg:text-xl  sm:text-lg px-5 py-2.5 text-center me-2 mb-2 flex items-center justify-center h-36 sm:h-">{item.title} <span className='pl-2'>{item.icon}</span></Link>
 
                 })}
             </div>

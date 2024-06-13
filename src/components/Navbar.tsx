@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
                     <Image src={logo} width={50} height={50} alt='mero portfolio' />
                     <p className='text-white font-bold tracking-wide text-xl pl-2'>Mero <span className='text-bright-red'>Portfolio</span></p>
                 </a>
-                <div className={`menu ${isOpen ? 'open bg-gradient-to-r from-blue-800 to-blue-600 z-100' : ''} md:relative md:left-auto md:top-auto md:flex md:flex-row md:items-center md:bg-transparent md:w-auto`}>
+                <div className={`menu ${isOpen ? 'open' : ''} md:relative md:left-auto md:top-auto md:flex md:flex-row md:items-center md:bg-transparent md:w-auto`}>
                     <ul className="flex flex-col md:flex-row md:space-x-4">
                         <li>
                             <Link href='/' className='mx-2 hover:text-bright-red md:text-xl sm:text-2xl mb-4 xs:text-2xl' onClick={() => setIsOpen(!isOpen)}>Home</Link>

@@ -13,7 +13,7 @@
     bottom: 3px;
     left: 50%;
     margin-left: -14px;
-    background-color: #002B5B;
+    background-color: #3f96f9;
 }
 
 .title h1:after {
@@ -25,7 +25,7 @@
     margin-top: 25px;
     left: 50%;
     margin-left: -50px;
-    background-color: #002B5B;
+    background-color: #3f96f9;
 }
 /* heading styles two  */
 .custom_heading_two:before {
@@ -37,7 +37,7 @@
   bottom: -7px;
   height: 2px;
   width: 55px;
-  background-color: #002B5B;
+  background-color: #3f96f9;
   z-index: 9;
 }
 
@@ -48,5 +48,5 @@
   bottom: -7px;
   height: 1px;
   width: 100%;
-  background-color: #b4b4b4;
+  background-color: #3f96f9;
 }
