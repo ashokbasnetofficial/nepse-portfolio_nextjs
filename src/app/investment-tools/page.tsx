@@ -66,4 +66,5 @@ const InvestmentToolsPage = () => {
 
     )
 }
+
 export default InvestmentToolsPage;

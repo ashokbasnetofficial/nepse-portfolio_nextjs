@@ -1,3 +1,4 @@
+
 "use client";
 import Link from 'next/link';
 import logo from '../../public/logo/mero portfolio.png';
@@ -24,7 +25,7 @@ const Navbar: React.FC = () => {
                             <Link href='/my-portfolio' className='mx-2 hover:text-bright-red  md:text-2xl sm:text-2xl mb-4 xs:text-2xl' onClick={() => setIsOpen(!isOpen)}>My Portfolio</Link>
                         </li>
                         <li>
-                            <Link href='/investment-tools' className='mx-2 hover:text-bright-red  md:text-2xl sm:text-2xl mb-4  xs:text-2xl' onClick={() => setIsOpen(!isOpen)}>Investment Tools</Link>
+                            <Link href='/investment-tools' className='mx-2 hover:text-bright-red  md:text-2xl sm:text-2xl mb-4  xs:text-2xl  ' onClick={() => setIsOpen(!isOpen)}>Investment Tools</Link>
                         </li>
                     </ul>
                     <button className="btn-primary  md:mt-2 md:ml-4">Login</button>

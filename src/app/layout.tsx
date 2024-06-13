@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className}  suppressHydrationWarning={true}>
         <Navbar />
         <Providers>
           <main className="lg:mx-40 md:mx-20 sm:mx-10 xs:mx-5">

@@ -110,4 +110,5 @@ const FormComponent = formComponents[investmenttools_id];
     )}
     </>
 };
+
 export default InvestmentToolsCalculator;
