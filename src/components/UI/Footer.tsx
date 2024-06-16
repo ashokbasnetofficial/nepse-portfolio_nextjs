@@ -20,8 +20,8 @@ const Footer = () => {
           <h5 className="font-semibold mb-2">Quick Links</h5>
           <div className="flex flex-col gap-2">
             <Link href='/' className="hover:text-bright-red transition duration-300">Home</Link>
-            <Link href='/portfolio' className="hover:text-bright-red transition duration-300">My Portfolio</Link>
-            <Link href='/tools' className="hover:text-bright-red transition duration-300">Investment Tools</Link>
+            <Link href='/my-portfolio' className="hover:text-bright-red transition duration-300">My Portfolio</Link>
+            <Link href='/investment-tools' className="hover:text-bright-red transition duration-300">Investment Tools</Link>
           </div>
         </div>
         
