@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+
 import Providers from "@/redux/Provider";
-const inter = Inter({ subsets: ["latin"] });
+import Footer from "@/components/UI/Footer";
+const inter = Montserrat({ weight:'400', subsets: ['latin'] });
 export const metadata: Metadata = {
   title: "Mero Portfolio",
   description: "Mero portfolio is website make with next js with Mongodb for managing stock portfolio of nepse",
@@ -23,6 +25,7 @@ export default function RootLayout({
             {children}
           </main>
         </Providers>
+        <Footer />
       </body>
     </html>
   );
