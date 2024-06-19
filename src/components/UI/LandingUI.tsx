@@ -9,8 +9,8 @@ const LandingUI = () => {
                 <div className="container mx-auto p-4 flex flex-col md:flex-row items-center justify-between">
                     <div className="text-center md:text-left md:w-1/2">
                         <h4 className="text-4xl font-bold mb-4">Ready to grow</h4>
-                        <h4 className="text-5xl uppercase font-bold mb-4">your portfolio</h4>
-                        <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        <h4 className="text-4xl uppercase font-bold mb-4">your portfolio</h4>
+                        <button className="text-2xl text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                             Get Started
                         </button>
                     </div>

@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
                             <Link href='/investment-tools' className='mx-2 hover:text-bright-red transition duration-300  md:text-xl sm:text-2xl mb-4  xs:text-2xl  ' onClick={() => setIsOpen(!isOpen)}>Investment Tools</Link>
                         </li>
                     </ul>
-                    <button className="btn-primary  md:mt-2 md:ml-4">Login</button>
+                    <Link href='/login'className="btn-primary  md:mt-2 md:ml-4">Login</Link>
                 </div>
                 <div className="md:hidden flex items-center z-10">
                     <button className='text-2xl text-white font-bold' onClick={() => setIsOpen(!isOpen)}>
