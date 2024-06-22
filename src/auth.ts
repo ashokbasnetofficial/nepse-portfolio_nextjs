@@ -3,6 +3,7 @@ import CredentialProvider  from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
 import { User } from "./models/User";
 import { compare } from "bcryptjs";
+import  dbConnect  from "./app/lib/connectDB";
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [GoogleProvider({
     clientId:process.env.GOOGLE_CLIENT_ID,
@@ -27,6 +28,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         throw new CredentialsSignin('Please provide both email and password!');
       }
       //db connection 
+      await dbConnect();
       const user = await User.findOne({email}).select("+password");
       if(!user){
         throw new CredentialsSignin("Invalid email or password!");
@@ -43,4 +45,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }
   })
 ],
+pages:{
+  signIn:'/login'
+}
 })

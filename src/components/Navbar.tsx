@@ -1,4 +1,3 @@
-
 "use client";
 import Link from 'next/link';
 import logo from '../../public/logo/mero portfolio.png';
@@ -6,8 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { CiMenuFries } from "react-icons/ci";
 import { RiCloseLargeFill } from "react-icons/ri";
-
-const Navbar: React.FC = () => {
+const Navbar: React.FC = async () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <nav className="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-4 sm:p-6 md:flex md:justify-between md:items-center">

@@ -1,17 +1,17 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import Link from 'next/link';
+import UserLogin from '@/interfaces/userInterface';
 
-const Login = () => {
+const Login:React.FC<{onSubmit:(user:UserLogin)=>void}> = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e:React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-  };
-
+    if(email==='' || password==='') return ; 
+     props.onSubmit({email,password});
+  }
   const handleGoogleAuth = () => {
     // Handle Google authentication here
   };

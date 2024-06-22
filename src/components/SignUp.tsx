@@ -1,16 +1,19 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-
-const SignupComponent = () => {
+import { User } from '@/interfaces/userInterface';
+const SignupComponent:React.FC<{onSubmit:(formData:User)=>void}> = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle signup logic here
-  };
+    if(name===''||email===''||password===''){
+      return ;  
+    }
+    props.onSubmit({name,email,password})
+
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
