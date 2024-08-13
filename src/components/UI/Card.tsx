@@ -1,12 +1,15 @@
-import React from 'react'
-import classes from './card.module.css'
+import React from "react";
+import classes from "./card.module.css";
 interface cardProps {
-    children:React.ReactNode
+  children: React.ReactNode;
+  onClick: () => void;
 }
-const Card:React.FC<cardProps>= ({children}) => {
+const Card: React.FC<cardProps> = (props) => {
   return (
-    <div className={classes.card}>{children}</div>
-  )
-}
+    <div className={classes.card} onClick={props.onClick} >
+      {props.children}
+    </div>
+  );
+};
 
 export default Card;

@@ -34,10 +34,10 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -7px;
-  height: 2px;
-  width: 55px;
-  background-color: #3f96f9;
+  bottom: -8px;
+  height: 3px;
+  width: 30px;
+  background-color: #0463cf;
   z-index: 9;
 }
 
@@ -48,5 +48,5 @@
   bottom: -7px;
   height: 1px;
   width: 100%;
-  background-color: #3f96f9;
+  background-color: #0055b6;
 }

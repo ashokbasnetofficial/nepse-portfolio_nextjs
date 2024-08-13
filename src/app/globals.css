@@ -3,29 +3,32 @@
 @tailwind utilities;
 
 /* Primary Colors */
+.bg_color {
+  background-color: #fcfcfc !important;
+}
 .bg-navy-blue {
-  background-color: #002B5B;
+  background-color: #002b5b;
 }
 
 .text-navy-blue {
-  color: #002B5B;
+  color: #002b5b;
 }
 
 .bg-green {
-  background-color: #00A86B;
+  background-color: #00a86b;
 }
 
 .text-green {
-  color: #00A86B;
+  color: #00a86b;
 }
 
 /* Secondary Colors */
 .bg-light-gray {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
 }
 
 .text-light-gray {
-  color: #E0E0E0;
+  color: #e0e0e0;
 }
 
 .bg-dark-gray {
@@ -38,41 +41,41 @@
 
 /* Accent Colors */
 .bg-bright-red {
-  background-color: #FF4C4C;
+  background-color: #ff4c4c;
 }
 
 .text-bright-red {
-  color: #FF4C4C;
+  color: #ff4c4c;
 }
 
 .bg-golden-yellow {
-  background-color: #FFD700;
+  background-color: #ffd700;
 }
 
 .text-golden-yellow {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 /* Supporting Colors */
 .bg-sky-blue {
-  background-color: #87CEEB;
+  background-color: #87ceeb;
 }
 
 .text-sky-blue {
-  color: #87CEEB;
+  color: #87ceeb;
 }
 
 /* White */
 .bg-white {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .text-white {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .text-primary {
-  color: #002B5B;
+  color: #002b5b;
 }
 
 .text-secondary {
@@ -80,17 +83,17 @@
 }
 
 .bg-primary {
-  background-color: #002B5B;
+  background-color: #002b5b;
 }
 
 .bg-secondary {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
 }
 
 /* Button styles */
 .btn-primary {
-  background-color: #00A86B;
-  color: #FFFFFF;
+  background-color: #00a86b;
+  color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
 }
@@ -100,8 +103,8 @@
 }
 
 .btn-accent {
-  background-color: #FFD700;
-  color: #FFFFFF;
+  background-color: #ffd700;
+  color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
 }
@@ -109,7 +112,6 @@
 .btn-accent:hover {
   background-color: #ccac00;
 }
-
 
 .menu {
   position: fixed;
@@ -125,11 +127,10 @@
   justify-content: center;
   align-items: center;
   text-align: center;
- }
+}
 
 .menu.open {
   left: 0;
-
 }
 
 .btn-link {

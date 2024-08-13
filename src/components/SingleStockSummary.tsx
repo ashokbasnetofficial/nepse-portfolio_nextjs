@@ -1,9 +1,13 @@
 import React from 'react'
 import Card from './UI/Card'
 import StockDetails from './UI/StockDetails'
-const SingleStockSummary = () => {
+interface stockSummaryProps {
+  onClick:(stockName:string)=>void;
+}
+const SingleStockSummary:React.FC<stockSummaryProps> = (props) => {
+  
   return (
-    <Card>
+    <Card onClick={()=>props.onClick('SONA')}>
       <div className='flex flex-row items-center bg-blue-400 justify-between px-4 py-4 uppercase rounded-lg'>
     <p className='font-bold text-base sm:text-lg md:text-xl'>SONA</p>
     <p className='flex flex-row items-center text-sm sm:text-base md:text-lg'>
@@ -14,7 +18,6 @@ const SingleStockSummary = () => {
         <span className='bg-blue-600 rounded-sm text-white font-bold'>+3.89%</span>
     </p>
 </div>
-
       <StockDetails />
     </Card>
   )

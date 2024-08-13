@@ -1,8 +1,10 @@
 .card {
-    width: inherit;
-    height: auto;
-    background: linear-gradient(to right, #8cbffd, #aad3ff);
-    /* background-color: #b7dfba; */
-    /* title bg color  #a2d4a1 #ch red #e3bdbc #dcaaa3 #f94946*/
-    border-radius: 14px;
+  width: inherit;
+  height: auto;
+  background: linear-gradient(to right, #8cbffd, #aad3ff);
+  /* background-color: #b7dfba; */
+  /* title bg color  #a2d4a1 #ch red #e3bdbc #dcaaa3 #f94946*/
+  border-radius: 14px;
+  position: relative;
+  cursor: pointer;
 }

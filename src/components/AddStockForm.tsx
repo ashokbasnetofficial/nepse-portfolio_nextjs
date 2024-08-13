@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+"use client";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 interface FormProps {
-  onSubmit: (formData: any) => void; // Define the data type for submitted data
-  onClose: () => void; // Function to close the modal
+  onSubmit: (formData: any) => void;
+  onClose: () => void;
 }
 
 interface NepseData {
   symbol: string;
   title: string;
   LTP: string;
-  changePercent:string
+  changePercent: string;
 }
 
 const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
-    transactionType: '',
-    totalShareQuantity: '',
-    purchasePrice: '',
-    transcation_date: '', 
-    selectStock: '', 
+    transactionType: "",
+    totalShareQuantity: "",
+    purchasePrice: "",
+    transcation_date: "",
+    selectStock: "",
+    LTP: 0,
+    ChangePercent: 0,
   });
 
   const [stocks, setStocks] = useState<NepseData[]>([]);
@@ -28,29 +31,48 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
     // Fetch stocks from the API
     const fetchStocks = async () => {
       try {
-        const response = await axios.get('/api/nepse'); 
+        const response = await axios.get("/api/nepse");
         setStocks(response.data.data);
       } catch (error) {
-        console.error('Error fetching stocks:', error);
+        console.error("Error fetching stocks:", error);
       }
     };
 
     fetchStocks();
   }, []);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit(formData); 
+    const stock: NepseData | undefined =  stocks.find(
+      (stock) =>
+        stock.symbol.toLocaleLowerCase() ===
+        formData.selectStock.toLocaleLowerCase()
+    );
+    if (stock) {
+      formData.ChangePercent = parseFloat(stock.changePercent);
+      formData.LTP = parseFloat(stock.LTP);
+    }
+    onSubmit(formData);
+    // close model after submitting form
+    onClose();
+    // onSubmit(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4">
+    <form onSubmit={handleSubmit} className="space-y-4 p-4" method="POST">
       <div>
-        <label htmlFor="transactionType" className="block text-sm font-medium text-gray-700">Transaction Type</label>
+        <label
+          htmlFor="transactionType"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Transaction Type
+        </label>
         <select
           id="transactionType"
           name="transactionType"
@@ -71,7 +93,12 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
       </div>
 
       <div>
-        <label htmlFor="selectStock" className="block text-sm font-medium text-gray-700">Select Stock</label>
+        <label
+          htmlFor="selectStock"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Select Stock
+        </label>
         <select
           id="selectStock"
           name="selectStock"
@@ -90,7 +117,12 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
       </div>
 
       <div>
-        <label htmlFor="totalShareQuantity" className="block text-sm font-medium text-gray-700">Total Share Quantity</label>
+        <label
+          htmlFor="totalShareQuantity"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Total Share Quantity
+        </label>
         <input
           type="number"
           id="totalShareQuantity"
@@ -103,7 +135,12 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
       </div>
 
       <div>
-        <label htmlFor="purchasePrice" className="block text-sm font-medium text-gray-700">Purchase Price</label>
+        <label
+          htmlFor="purchasePrice"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Purchase Price
+        </label>
         <input
           type="number"
           id="purchasePrice"
@@ -116,7 +153,12 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
       </div>
 
       <div>
-        <label htmlFor="transcation_date" className="block text-sm font-medium text-gray-700">Transaction Date</label>
+        <label
+          htmlFor="transcation_date"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Transaction Date
+        </label>
         <input
           type="date"
           id="transcation_date"
