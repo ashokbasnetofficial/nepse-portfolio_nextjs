@@ -21,8 +21,7 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
     purchasePrice: "",
     transcation_date: "",
     selectStock: "",
-    LTP: 0,
-    ChangePercent: 0,
+    companyName: "",
   });
 
   const [stocks, setStocks] = useState<NepseData[]>([]);
@@ -49,14 +48,13 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const stock: NepseData | undefined =  stocks.find(
+    const stock: NepseData | undefined = stocks.find(
       (stock) =>
         stock.symbol.toLocaleLowerCase() ===
         formData.selectStock.toLocaleLowerCase()
     );
     if (stock) {
-      formData.ChangePercent = parseFloat(stock.changePercent);
-      formData.LTP = parseFloat(stock.LTP);
+      formData.companyName = stock.title;
     }
     onSubmit(formData);
     // close model after submitting form

@@ -25,10 +25,11 @@ const MyProfilePage = () => {
         url: "/api/stock",
         data: formData,
       });
-      if (response.status !== 201) {
+      if (response.status === 201) {
+        console.log("data inserted successfully", response.data);
+      } else {
         throw new Error("some thing went wrong!");
       }
-      console.log("data inserted successfully", response.data);
     } catch (err) {
       console.log("something went wrong!", err);
     }
