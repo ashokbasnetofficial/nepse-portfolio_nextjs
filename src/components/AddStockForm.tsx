@@ -22,8 +22,9 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
     transcation_date: "",
     selectStock: "",
     companyName: "",
+    dividend: "",
   });
-
+  const [selectTranscation, setSelectTranscation] = useState("");
   const [stocks, setStocks] = useState<NepseData[]>([]);
 
   useEffect(() => {
@@ -113,42 +114,70 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
           ))}
         </select>
       </div>
+      {formData.transactionType.toString().toLocaleLowerCase() !==
+      "dividend" ? (
+        <>
+          <div>
+            <label
+              htmlFor="totalShareQuantity"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Total Share Quantity
+            </label>
+            <input
+              type="number"
+              id="totalShareQuantity"
+              name="totalShareQuantity"
+              value={formData.totalShareQuantity}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              required
+              disabled={!formData.transactionType}
+              placeholder="Ex. 500"
+            />
+          </div>
 
-      <div>
-        <label
-          htmlFor="totalShareQuantity"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Total Share Quantity
-        </label>
-        <input
-          type="number"
-          id="totalShareQuantity"
-          name="totalShareQuantity"
-          value={formData.totalShareQuantity}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          required
-        />
-      </div>
-
-      <div>
-        <label
-          htmlFor="purchasePrice"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Purchase Price
-        </label>
-        <input
-          type="number"
-          id="purchasePrice"
-          name="purchasePrice"
-          value={formData.purchasePrice}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          required
-        />
-      </div>
+          <div>
+            <label
+              htmlFor="purchasePrice"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Purchase Price (Per Unit)
+            </label>
+            <input
+              type="number"
+              id="purchasePrice"
+              name="purchasePrice"
+              value={formData.purchasePrice}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              required
+              disabled={!formData.transactionType}
+              placeholder="Ex. Rs.100"
+            />
+          </div>
+        </>
+      ) : (
+        <div>
+          <label
+            htmlFor="dividend"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Dividend Amount
+          </label>
+          <input
+            type="number"
+            id="dividend"
+            name="dividend"
+            value={formData.purchasePrice}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            required
+            disabled={!formData.transactionType}
+            placeholder="Ex. Rs. 400"
+          />
+        </div>
+      )}
 
       <div>
         <label
@@ -165,6 +194,7 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           required
+          disabled={!formData.transactionType}
         />
       </div>
 

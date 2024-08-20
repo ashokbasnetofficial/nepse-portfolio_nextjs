@@ -22,7 +22,7 @@ const MyProfilePage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        url: "/api/stock",
+        url: "/api/stocks",
         data: formData,
       });
       if (response.status === 201) {
