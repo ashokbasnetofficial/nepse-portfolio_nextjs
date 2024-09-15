@@ -20,6 +20,7 @@ export interface StockResult {
   real_Gain: number;
   unrealGain: number;
   receiveable_Amount: number;
+  transactions?: [StockTransaction];
 }
 export interface StockDetails {
   currentUnits: number;
@@ -57,5 +58,6 @@ export default interface StockData {
   previousPrice: number;
   avgPurchasePrice: number;
   totalQty: number;
-  transactions: StockTransaction[];
+  firstTranscation: Date;
+  dividend: number;
 }

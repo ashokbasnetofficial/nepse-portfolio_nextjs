@@ -1,17 +1,19 @@
-'use client';
-import React, { useState } from 'react';
-import { FaGoogle } from 'react-icons/fa';
-import Link from 'next/link';
-import UserLogin from '@/interfaces/userInterface';
+"use client";
+import React, { useState } from "react";
+import { FaGoogle } from "react-icons/fa";
+import Link from "next/link";
+import UserLogin from "@/interfaces/userInterface";
+import { toast } from "sonner";
 
-const Login:React.FC<{onSubmit:(user:UserLogin)=>void}> = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const handleSubmit =async (e:React.FormEvent) => {
+const Login: React.FC<{ onSubmit: (user: UserLogin) => void }> = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(email==='' || password==='') return ; 
-     props.onSubmit({email,password});
-  }
+    if (email === "" || password === "")
+      return toast.error("Please provide both fields");
+    props.onSubmit({ email, password });
+  };
   const handleGoogleAuth = () => {
     // Handle Google authentication here
   };
@@ -20,20 +22,28 @@ const Login:React.FC<{onSubmit:(user:UserLogin)=>void}> = (props) => {
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg md:space-y-8 md:p-12">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
-          <p className="mt-2 text-sm text-gray-600">Welcome back! Please enter your details.</p>
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            Sign in to your account
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Welcome back! Please enter your details.
+          </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <input type="hidden" name="remember" value="true" />
           <div className="space-y-4">
             <div>
-              <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">Email address</label>
+              <label
+                htmlFor="email-address"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email address
+              </label>
               <input
                 id="email-address"
                 name="email"
                 type="email"
                 autoComplete="email"
-                required
                 className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Email address"
                 value={email}
@@ -41,13 +51,17 @@ const Login:React.FC<{onSubmit:(user:UserLogin)=>void}> = (props) => {
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                required
                 className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Password"
                 value={password}
@@ -57,7 +71,10 @@ const Login:React.FC<{onSubmit:(user:UserLogin)=>void}> = (props) => {
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <Link href="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link
+                href="/forgot-password"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 Forgot your password?
               </Link>
             </div>
@@ -82,7 +99,10 @@ const Login:React.FC<{onSubmit:(user:UserLogin)=>void}> = (props) => {
           </button>
         </div>
         <div className="mt-6 text-center">
-          <Link href="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link
+            href="/signup"
+            className="font-medium text-indigo-600 hover:text-indigo-500"
+          >
             Don't have an account? Sign up
           </Link>
         </div>

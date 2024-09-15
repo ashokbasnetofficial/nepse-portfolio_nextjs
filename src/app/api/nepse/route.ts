@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import cheerio from "cheerio";
 import https from "https";
-
 export interface NepseData {
   symbol: string;
   companyName: string;

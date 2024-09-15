@@ -2,3 +2,26 @@
   top: 30%;
   right: 34.5%;
 }
+.transcation_summary_title {
+  width: 100%;
+  padding-bottom: 1.5rem;
+  padding-top:1rem;
+}
+.transcation_summary_title h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 20px;
+  letter-spacing: 1px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 16px 0;
+  grid-gap: 22px;
+}
+.transcation_summary_title h1:after,
+.transcation_summary_title h1:before {
+  content: " ";
+  display: block;
+  border-bottom: 2px solid #0031ac;
+  background-color: #ffffff;
+  width: 100% !important;
+}

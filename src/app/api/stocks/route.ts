@@ -5,7 +5,6 @@ import { get_Purchase_Price } from "@/utils/getPurchasePrice";
 import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
 import { NepseData } from "../nepse/route";
-
 export async function POST(req: NextRequest) {
   try {
     // Connect to the database
@@ -23,39 +22,12 @@ export async function POST(req: NextRequest) {
       companyName,
       dividend,
     } = data;
+
     let isNewStock = false;
     let quantity = parseInt(totalShareQuantity, 10);
     let price = parseFloat(purchasePrice);
     transactionType = transactionType.toLowerCase();
-    let stock = await Stock.findOne({ symbol: selectStock });
-    if (transactionType === "dividend") {
-      quantity = 0;
-      price = 0;
-    }
-
-    if (!stock && transactionType !== "sell") {
-      stock = new Stock({
-        symbol: selectStock,
-        companyName,
-        avgPurchasePrice: price,
-        totalQty: quantity,
-        transactions: [],
-      });
-      isNewStock = true;
-    } else if (!stock) {
-      throw new Error("Stock not found for non-buy transaction");
-    }
-
-    if (!stock.transactions) {
-      stock.transactions = [];
-    }
-    const newTransaction = {
-      transactionType,
-      transactionDate: transcation_date,
-      quantity,
-      price,
-      dividend,
-    };
+    // if transcation type is buy
     if (transactionType === "buy") {
       const totalAmount = price * quantity;
       const brokerComission = getBrokerCommission(totalAmount);
@@ -66,6 +38,43 @@ export async function POST(req: NextRequest) {
       );
       price = totalPurchasePrice / quantity;
     }
+    let stock = await Stock.findOne({ symbol: selectStock });
+    if (transactionType === "dividend") {
+      quantity = 0;
+      price = 0;
+    } else if (transactionType === "bonus_share") {
+      price = 0;
+    }
+
+    if (!stock && transactionType !== "sell") {
+      stock = new Stock({
+        symbol: selectStock,
+        companyName,
+        avgPurchasePrice: price,
+        totalQty: quantity,
+        firstTranscationDate: transcation_date,
+        transactions: [],
+      });
+      isNewStock = true;
+    } else if (!stock) {
+      throw new Error("Stock not found for non-buy transaction");
+    }
+
+    if (!stock.transactions) {
+      stock.transactions = [];
+    }
+    const newTransactionDate = new Date(transcation_date);
+    if (newTransactionDate < stock.firstTranscationDate) {
+      stock.firstTranscationDate = newTransactionDate; // Update the oldest transaction date
+    }
+
+    const newTransaction = {
+      transactionType,
+      transactionDate: transcation_date,
+      quantity,
+      price,
+      dividend,
+    };
     switch (transactionType) {
       case "buy":
       case "ipo":
@@ -118,13 +127,15 @@ export async function GET(req: NextRequest) {
 
     // Get portfolio stocks
     const stockData = await Stock.find({});
+    console.log(stockData);
     // Fetch Nepse market data
     const response = await axios.get("http://localhost:3000/api/nepse");
     if (response.status !== 200) {
       throw new Error("Failed to fetch Nepse Data.");
     }
 
-    const nepseData = response.data.data;
+    const nepseData = await response.data.data;
+
     const portfolioWithMarketInfo = stockData.map((stock) => {
       let dividend = 0;
       stock.transactions.map((transaction: any) => {
@@ -139,6 +150,7 @@ export async function GET(req: NextRequest) {
         (nepseStock: any) =>
           nepseStock.symbol.toLowerCase() === stock.symbol.toLowerCase()
       );
+      console.log(marketInfo);
       let getMarketInfoAssociatedToStock = {
         LTP: marketInfo.LTP,
         changePercent: marketInfo.changePercent,
@@ -154,6 +166,7 @@ export async function GET(req: NextRequest) {
         ...getMarketInfoAssociatedToStock,
         avgPurchasePrice: stock.avgPurchasePrice,
         totalQty: stock.totalQty,
+        firstTranscation: stock.firstTranscationDate,
         dividend,
       };
     });

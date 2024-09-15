@@ -1,4 +1,4 @@
-export default function getTaxPercentage(dateString: string) {
+export default function getTaxPercentage(dateString: Date) {
   const currentDate = new Date();
   const inputDate = new Date(dateString);
 

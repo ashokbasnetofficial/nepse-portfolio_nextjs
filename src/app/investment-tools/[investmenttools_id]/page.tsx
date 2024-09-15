@@ -33,10 +33,6 @@ const InvestmentToolsCalculator = ({
   const dividend_result: DividendSummary = useSelector(
     (state: any) => state.dividend
   );
-  // back router
-  const routerHandler = () => {
-    window.history.back();
-  };
   const { investmenttools_id } = params;
   const formComponents: any = {
     "sip-calculator": SIPForm,

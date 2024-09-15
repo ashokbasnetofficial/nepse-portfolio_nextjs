@@ -13,17 +13,20 @@ import { FaTimes } from "react-icons/fa";
 import useFetch from "@/hooks/use-fetch";
 import { RootState } from "@/redux/store";
 import { portfolioAction } from "@/redux/slices/portfolioSlice";
+import { useSession } from "next-auth/react";
 const MyProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [stockName, setStockName] = useState("");
+  const [stockName, setStockName] = useState<string | null>("");
   const { loading, error, sendRequest } = useFetch();
   const [isFormSubmitted, setIsSetFormSubmitted] = useState(false);
+  const { data: session, status } = useSession();
   const dispatch = useDispatch();
   const stocks = useSelector((state: RootState) => state.portfolio);
   useEffect(() => {
     console.log("fetching stock");
+
     const fetchStocks = async () => {
-      sendRequest(
+      await sendRequest(
         {
           method: "GET",
           url: "api/stocks",
@@ -75,14 +78,7 @@ const MyProfilePage = () => {
       >
         {stockName ? (
           <>
-            <button
-              type="button"
-              onClick={toggleModal}
-              className={`absolute ${classes.close_modal} flex items-center justify-center w-8 h-8 bg-white rounded-full text-gray-600 hover:text-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800`}
-            >
-              <FaTimes />
-            </button>
-            <EditStock onClose={toggleModal} onSubmit={handleStockForm} />
+            <EditStock onClose={toggleModal} symbol={stockName} />
           </>
         ) : (
           <AddStockForm onClose={toggleModal} onSubmit={handleStockForm} />
@@ -95,7 +91,8 @@ const MyProfilePage = () => {
         </p>
       ) : (
         <div className="mt-5 w-full flex flex-col items-end mb-4">
-          <AddStockButton onClick={toggleModal} />
+          <p>{session?.user?.name}</p>
+          <AddStockButton onClick={toggleModal} title="Add Stock" />
           <StockSummary />
           <SearchStock />
           <div className="grid grid-cols-1 lg:grid-cols-3 mt-4 gap-4 mx-auto">

@@ -38,8 +38,14 @@ const SingleStockDetails: React.FC<SingleStockDetailsProps> = (props) => {
           </p>
         </div>
         <div className="flex flex-col">
-          <p className="text-sm md:text-base">Estimated Profit</p>
-          <p className="font-bold text-sm md:text-base">
+          <p className="text-sm md:text-base">
+            {stock.estimatedProfit > 0 ? "Estimated Profit" : "Estimated Loss"}
+          </p>
+          <p
+            className={`font-bold text-sm md:text-base ${
+              stock.estimatedProfit > 0 ? "text-green-600" : "text-red-600"
+            } `}
+          >
             Rs. {stock.estimatedProfit.toFixed(2)}
           </p>
         </div>
@@ -86,9 +92,13 @@ const SingleStockDetails: React.FC<SingleStockDetailsProps> = (props) => {
             </span>
           </p>
           <p className="text-sm md:text-base">
-            Unreal Gain:{" "}
-            <span className="font-bold text-sm md:text-base">
-              {stock.unrealGain.toFixed(2)}%
+            {stock.estimatedProfit > 0 ? "Unreal Gain" : "Unreal Loss"}:{" "}
+            <span
+              className={`font-bold text-sm md:text-base ${
+                stock.estimatedProfit > 0 ? "text-green-600" : "text-red-600"
+              } `}
+            >
+              Rs. {stock.unrealGain.toFixed(2)}
             </span>
           </p>
         </div>

@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import StockData, { StockResult } from "@/interfaces/stockInterface";
 import getTaxPercentage from "@/utils/getTaxPercentage";
 import { stockCalculator } from "@/utils/stockCalculator";
+import getBrokerCommission from "@/utils/calculateBrokerCommision";
 // Initialize the state as an array of StockResult
 const initialState: StockResult[] = [];
-
 const portfolioSlice = createSlice({
   name: "portfolio-tracker",
   initialState,
@@ -15,11 +15,28 @@ const portfolioSlice = createSlice({
       const data = action.payload;
       data.forEach((stock, index) => {
         if (state[index]) {
-          // If the stock already exists in the state, update only the symbol
           state[index].symbol = stock.symbol;
-          
         } else {
-          // If it's a new stock, push a new result with only the symbol filled
+          const purchase_Price = stock.avgPurchasePrice;
+          const quantity = stock.totalQty;
+          const LTP = stock.LTP;
+          const investment = quantity * purchase_Price;
+          const currentValue = stock.totalQty * LTP;
+          const dividendSum = stock.dividend;
+          const taxPercentage = getTaxPercentage(stock.firstTranscation);
+          const {
+            total_investment,
+            total_receive_amount,
+            profit_or_loss,
+            price_per_share,
+            dividend,
+          } = stockCalculator(
+            purchase_Price,
+            quantity,
+            LTP,
+            taxPercentage,
+            dividendSum
+          );
           state.push({
             symbol: stock.symbol,
             LTP: stock.LTP,
@@ -29,17 +46,17 @@ const portfolioSlice = createSlice({
             },
             currentUnits: stock.totalQty,
             soldUnits: 0,
-            investment: stock.totalQty * stock.avgPurchasePrice,
+            investment: investment,
             WACC: stock.avgPurchasePrice,
             soldValue: 0,
-            estimatedProfit: 0,
-            currentValue: 0,
-            dividend: 0,
+            estimatedProfit: profit_or_loss,
+            currentValue: currentValue,
+            dividend: dividend,
             todayGain: 0,
-            current_investment: 0,
+            current_investment: investment,
             real_Gain: 0,
-            unrealGain: 0,
-            receiveable_Amount: 0,
+            unrealGain: profit_or_loss,
+            receiveable_Amount: total_receive_amount,
             profit: 0,
           });
         }

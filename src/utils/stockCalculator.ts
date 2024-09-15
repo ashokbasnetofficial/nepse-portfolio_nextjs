@@ -16,11 +16,11 @@ export function stockCalculator(
   let dp_charge = 25;
   let total_amount_without_tax =
     total_amount - (dp_charge + sebon_fee + total_broker_comisson);
-  total_investment = get_Purchase_Price(
-    quantity,
-    purchasePrice,
-    broker_comission_percent
-  );
+  // total_investment = get_Purchase_Price(
+  //   quantity,
+  //   purchasePrice,
+  //   broker_comission_percent
+  // );
   //profit or loss before tax
   const total_profit_before_tax = total_amount_without_tax - total_investment;
   // tax evaluate if profit
@@ -36,7 +36,6 @@ export function stockCalculator(
     total_receive_amount,
     profit_or_loss,
     price_per_share,
-    dividend
+    dividend,
   };
-  
 }

@@ -1,4 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
+
+// Define the Transaction interface
 interface ITransaction extends Document {
   transactionType:
     | "buy"
@@ -16,13 +18,13 @@ interface ITransaction extends Document {
 }
 
 // Define the Stock interface
-interface IStock extends Document {
+export interface IStock extends Document {
   symbol: string;
   companyName: string;
   avgPurchasePrice: number;
   totalQty: number;
+  firstTranscationDate: Date;
   transactions: ITransaction[];
-  addTransaction(transaction: ITransaction): Promise<void>;
 }
 
 // Transaction Schema
@@ -44,7 +46,7 @@ const transactionSchema = new Schema<ITransaction>({
   transactionDate: { type: Date, required: true },
   quantity: { type: Number, required: false },
   price: { type: Number, required: false },
-  dividend: { type: Number  , required: false },
+  dividend: { type: Number, required: false },
 });
 
 // Stock Schema
@@ -53,7 +55,9 @@ const stockSchema = new Schema<IStock>({
   companyName: { type: String, required: true },
   avgPurchasePrice: { type: Number, required: true },
   totalQty: { type: Number, required: true },
+  firstTranscationDate: { type: Date, required: true },
   transactions: [transactionSchema],
 });
+
 export const Stock =
   mongoose.models?.Stock || mongoose.model<IStock>("Stock", stockSchema);

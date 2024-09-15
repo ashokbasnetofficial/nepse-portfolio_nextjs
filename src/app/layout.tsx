@@ -4,12 +4,17 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Providers from "@/redux/Provider";
 import Footer from "@/components/UI/Footer";
+import { Toaster } from "sonner";
+import { SessionProvider } from "next-auth/react"; // Import SessionProvider
+
 const inter = Mandali({ weight: "400", subsets: ["latin"] });
+
 export const metadata: Metadata = {
   title: "Mero Portfolio",
   description:
-    "Mero portfolio is website make with next js with Mongodb for managing stock portfolio of nepse",
+    "Mero portfolio is a website built with Next.js and MongoDB for managing the NEPSE stock portfolio",
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,12 +26,18 @@ export default function RootLayout({
         className={`${inter.className} bg_color`}
         suppressHydrationWarning={true}
       >
-        <Navbar />
-        
-        <Providers>
-          <main className="">{children}</main>
-        </Providers>
-        <Footer />
+        <SessionProvider>
+          {" "}
+          {/* Wrap content with SessionProvider */}
+          <Navbar />
+          <Providers>
+            <main>
+              {children}
+              <Toaster />
+            </main>
+          </Providers>
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );

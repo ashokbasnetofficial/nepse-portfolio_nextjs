@@ -3,8 +3,8 @@ import classes from "./card.module.css";
 
 interface CardProps {
   children: React.ReactNode;
-  onClick: () => void;
-  percentChange: number; // Add this to the props interface
+  onClick?: () => void;
+  percentChange: number; 
 }
 
 const Card: React.FC<CardProps> = (props) => {
