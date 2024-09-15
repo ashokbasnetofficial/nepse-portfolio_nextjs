@@ -1,12 +1,18 @@
 import React from "react";
 import classes from "./card.module.css";
-interface cardProps {
+
+interface CardProps {
   children: React.ReactNode;
   onClick: () => void;
+  percentChange: number; // Add this to the props interface
 }
-const Card: React.FC<cardProps> = (props) => {
+
+const Card: React.FC<CardProps> = (props) => {
+  const cardStyle =
+    props.percentChange >= 0 ? classes.card_pos : classes.card_neg;
+
   return (
-    <div className={classes.card} onClick={props.onClick} >
+    <div className={`${classes.card} ${cardStyle}`} onClick={props.onClick}>
       {props.children}
     </div>
   );

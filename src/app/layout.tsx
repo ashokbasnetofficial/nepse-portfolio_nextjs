@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Mandali } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Providers from "@/redux/Provider";
 import Footer from "@/components/UI/Footer";
-const inter = Montserrat({ weight: "400", subsets: ["latin"] });
+const inter = Mandali({ weight: "400", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Mero Portfolio",
   description:
@@ -22,8 +22,9 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <Navbar />
+        
         <Providers>
-          <main className="lg:mx-40 md:mx-20 sm:mx-10 xs:mx-5">{children}</main>
+          <main className="">{children}</main>
         </Providers>
         <Footer />
       </body>

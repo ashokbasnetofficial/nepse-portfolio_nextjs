@@ -1,47 +1,164 @@
 import dbConnect from "@/app/lib/connectDB";
-import { IStock } from "@/interfaces/IStock";
 import { Stock } from "@/models/Stock";
+import getBrokerCommission from "@/utils/calculateBrokerCommision";
+import { get_Purchase_Price } from "@/utils/getPurchasePrice";
+import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
+import { NepseData } from "../nepse/route";
 
 export async function POST(req: NextRequest) {
   try {
-    await dbConnect(); // Establish a connection to the database
-    const data = await req.json(); // Parse the incoming JSON data
-    let stock: IStock;
-    if (data.transactionType.toString().toLowerCase() !== "dividend") {
-      stock = {
-        symbol: data.selectStock.toString(),
-        quantity: parseInt(data.totalShareQuantity),
-        purchasePrice: parseFloat(data.purchasePrice),
-        transactionDate: data.transcation_date,
-        companyName: data.companyName,
-        dividend: 0,
-      };
-    } else {
-      stock = {
-        symbol: "",
-        quantity: 0,
-        purchasePrice: 0,
-        transactionDate: data.transcation_date,
-        companyName: data.companyName,
-        dividend: parseInt(data.dividend),
-      };
+    // Connect to the database
+    await dbConnect();
+
+    // Parse the request body
+    const data = await req.json();
+
+    let {
+      transactionType,
+      totalShareQuantity,
+      selectStock,
+      purchasePrice,
+      transcation_date,
+      companyName,
+      dividend,
+    } = data;
+    let isNewStock = false;
+    let quantity = parseInt(totalShareQuantity, 10);
+    let price = parseFloat(purchasePrice);
+    transactionType = transactionType.toLowerCase();
+    let stock = await Stock.findOne({ symbol: selectStock });
+    if (transactionType === "dividend") {
+      quantity = 0;
+      price = 0;
     }
-    const newStock = new Stock(stock);
 
-    // Save the document to MongoDB
-    await newStock.save();
+    if (!stock && transactionType !== "sell") {
+      stock = new Stock({
+        symbol: selectStock,
+        companyName,
+        avgPurchasePrice: price,
+        totalQty: quantity,
+        transactions: [],
+      });
+      isNewStock = true;
+    } else if (!stock) {
+      throw new Error("Stock not found for non-buy transaction");
+    }
 
-    // Return a JSON response
+    if (!stock.transactions) {
+      stock.transactions = [];
+    }
+    const newTransaction = {
+      transactionType,
+      transactionDate: transcation_date,
+      quantity,
+      price,
+      dividend,
+    };
+    if (transactionType === "buy") {
+      const totalAmount = price * quantity;
+      const brokerComission = getBrokerCommission(totalAmount);
+      const totalPurchasePrice = get_Purchase_Price(
+        quantity,
+        purchasePrice,
+        brokerComission
+      );
+      price = totalPurchasePrice / quantity;
+    }
+    switch (transactionType) {
+      case "buy":
+      case "ipo":
+      case "fpo":
+      case "right_share":
+      case "auction":
+        {
+          if (!isNewStock) {
+            const totalCost = stock.avgPurchasePrice * stock.totalQty;
+            const newTotalCost = totalCost + price * quantity;
+            stock.totalQty += quantity;
+            stock.avgPurchasePrice = newTotalCost / stock.totalQty;
+          }
+        }
+        break;
+
+      case "sell":
+        if (quantity > stock.totalQty) {
+          throw new Error("Sell quantity exceeds available stock");
+        }
+        stock.totalQty -= quantity;
+        break;
+
+      case "bonus_share":
+        stock.totalQty += quantity;
+        break;
+
+      case "dividend":
+        break;
+
+      default:
+        throw new Error("Invalid transaction type");
+    }
+
+    stock.transactions.push(newTransaction);
+    await stock.save();
     return NextResponse.json(
-      { message: "Stock saved successfully", stock: newStock },
-      { status: 201 }
+      { message: "Transaction added successfully" },
+      { status: 200 }
     );
-  } catch (error) {
-    console.error("Error processing the request:", error);
-    return NextResponse.json(
-      { message: "Internal Server Error", error },
-      { status: 500 }
-    );
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    // Connect to the database
+    await dbConnect();
+
+    // Get portfolio stocks
+    const stockData = await Stock.find({});
+    // Fetch Nepse market data
+    const response = await axios.get("http://localhost:3000/api/nepse");
+    if (response.status !== 200) {
+      throw new Error("Failed to fetch Nepse Data.");
+    }
+
+    const nepseData = response.data.data;
+    const portfolioWithMarketInfo = stockData.map((stock) => {
+      let dividend = 0;
+      stock.transactions.map((transaction: any) => {
+        if (
+          transaction.transactionType === "dividend" &&
+          transaction.dividend !== null
+        ) {
+          dividend += transaction.dividend;
+        }
+      });
+      const marketInfo = nepseData.find(
+        (nepseStock: any) =>
+          nepseStock.symbol.toLowerCase() === stock.symbol.toLowerCase()
+      );
+      let getMarketInfoAssociatedToStock = {
+        LTP: marketInfo.LTP,
+        changePercent: marketInfo.changePercent,
+        priceDifference: marketInfo.priceDifference,
+        previousPrice: marketInfo.previousPrice,
+      };
+
+      getMarketInfoAssociatedToStock ? getMarketInfoAssociatedToStock : null;
+      return {
+        _id: stock._id,
+        symbol: stock.symbol,
+        companyName: stock.companyName,
+        ...getMarketInfoAssociatedToStock,
+        avgPurchasePrice: stock.avgPurchasePrice,
+        totalQty: stock.totalQty,
+        dividend,
+      };
+    });
+    return NextResponse.json(portfolioWithMarketInfo, { status: 200 });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

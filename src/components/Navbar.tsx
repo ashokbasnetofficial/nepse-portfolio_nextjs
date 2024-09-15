@@ -8,7 +8,7 @@ import { RiCloseLargeFill } from "react-icons/ri";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-4 sm:p-6 md:flex md:justify-between md:items-center">
+    <nav className="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-4 sm:p-6 md:flex md:justify-between md:items-center ">
       <div className="container mx-auto flex justify-between items-center">
         <a href="/" className="flex space-x-1 items-center">
           <Image src={logo} width={50} height={50} alt="mero portfolio" />
@@ -46,7 +46,16 @@ const Navbar: React.FC = () => {
                 className="mx-2 hover:text-bright-red transition duration-300  md:text-xl sm:text-2xl mb-4  xs:text-2xl  "
                 onClick={() => setIsOpen(!isOpen)}
               >
-                Investment Tools
+                Useful Tools
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about-us"
+                className="mx-2 hover:text-bright-red transition duration-300  md:text-xl sm:text-2xl mb-4  xs:text-2xl  "
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                About Us
               </Link>
             </li>
           </ul>

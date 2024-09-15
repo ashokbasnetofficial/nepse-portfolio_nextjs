@@ -6,6 +6,7 @@ import shareSellCalculatorSlice from "./slices/shareSellCalculatorSlice";
 import shareBuyCalculatorSlice from "./slices/shareBuyCalculatorSlice";
 import fdCalculatorSlice from "./slices/fdSlice";
 import dividendSlice from "./slices/dividendSlice";
+import portfolioSlice from "./slices/portfolioSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     buy: shareBuyCalculatorSlice,
     fd: fdCalculatorSlice,
     dividend: dividendSlice,
+    portfolio: portfolioSlice,
   },
 });
 export default store;

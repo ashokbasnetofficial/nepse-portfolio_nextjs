@@ -1,62 +1,73 @@
 import Image from "next/image";
-import landingPageImg from "../../../public/images/landingpage.gif";
-import { FaLock, FaChartLine, FaMobileAlt, FaRocket } from "react-icons/fa";
 import Services from "./Services";
+import bg1 from "../../../public/images/hero-1-img.png";
+import bg2 from "../../../public/images/hero-1-bottom-shape.png";
+import googleIcon from "../../../public/images/google.png";
+import bg3 from "../../../public/images/hero-1-bg.png";
+import { FaArrowDown } from "react-icons/fa6";
 import Link from "next/link";
+import classes from "@/components/UI/LandingPage.module.css";
 
 const LandingUI = () => {
   return (
     <>
-      <section className="min-h-screen flex flex-col items-center justify-center">
-        <div className="container mx-auto p-4 flex flex-col md:flex-row items-center justify-between">
-          <div className="text-center md:text-left md:w-1/2">
-            <h4 className="text-4xl font-bold mb-4">Ready to grow</h4>
-            <h4 className="text-4xl uppercase font-bold mb-4">
-              your portfolio
-            </h4>
-            <Link href="/login">
-              <button className="text-2xl text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                Get Started
-              </button>
-            </Link>
-          </div>
-          <div className="md:w-1/2 mt-6 md:mt-0 hidden xs:block">
-            <Image
-              src={landingPageImg}
-              height={400}
-              width={600}
-              alt="landing page"
-              className="mx-auto"
-            />
+      <section
+        id="home"
+        className="relative bg-blue-600 overflow-hidden bg-cover w-full"
+        style={{
+          backgroundImage: `url(${bg3.src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="container relative z-1 px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 items-center">
+            <div className="lg:mb-0 mb-12 lg:pl-12">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6">
+                GROW YOUR PORTFOLIO NOW!
+              </h1>
+              <p className="text-base md:text-lg lg:text-xl font-normal text-white/70 mb-6">
+                Mero Portfolio offers a comprehensive suite of financial
+                calculators for SIP, FD, share transactions, and EMI. Our
+                primary focus is tracking NEPSE portfolios, providing users with
+                tools to manage and optimize their investments efficiently.
+              </p>
+              <div className="lg:max-w-lg">
+                <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                  {/* Get Started Button */}
+                  <button className="py-2 px-6 text-white text-base font-medium rounded-md bg-green-500 hover:bg-green-500/80 transition duration-300">
+                    Get Started
+                  </button>
+
+                  {/* Sign in with Google Button */}
+                  <button className="py-2 px-6 flex items-center text-base font-medium rounded-md bg-white hover:bg-gray-100 border border-gray-300 transition duration-300">
+                    <Image
+                      src={googleIcon}
+                      alt="Google Icon"
+                      width={20}
+                      height={20}
+                      className="mr-2"
+                    />
+                    Sign in with Google
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="lg:ms-auto mx-auto z-10">
+              <Image src={bg1} alt="" className="w-full h-auto" />
+            </div>
           </div>
         </div>
-        <Services />
-        {/* <div className="w-full mt-12">
-                    <h5 className='text-center mb-8 text-3xl font-semibold'>We've got your back</h5>
-                    <div className='flex flex-col md:flex-row justify-around'>
-                        <div className="text-center md:w-1/4 p-4">
-                            <FaLock className='text-4xl text-blue-600 mx-auto mb-2' />
-                            <h6 className="font-bold mb-2">Secure</h6>
-                            <p>Our mission is to provide services securely so that our customers can use them without second thoughts.</p>
-                        </div>
-                        <div className="text-center md:w-1/4 p-4">
-                            <FaChartLine className='text-4xl text-green-600 mx-auto mb-2' />
-                            <h6 className="font-bold mb-2">Real Time Data</h6>
-                            <p>Our mission is to provide real-time data so that our customers can make informed decisions quickly.</p>
-                        </div>
-                        <div className="text-center md:w-1/4 p-4">
-                            <FaMobileAlt className='text-4xl text-purple-600 mx-auto mb-2' />
-                            <h6 className="font-bold mb-2">Responsive</h6>
-                            <p>Our mission is to provide responsive services so that our customers can use them seamlessly on any device.</p>
-                        </div>
-                        <div className="text-center md:w-1/4 p-4">
-                            <FaRocket className='text-4xl text-red-600 mx-auto mb-2' />
-                            <h6 className="font-bold mb-2">Blazing Fast</h6>
-                            <p>Our mission is to provide blazing fast services so that our customers can save valuable time.</p>
-                        </div>
-                    </div>
-                </div> */}
+        <div className="absolute inset-x-0 bottom-0">
+          <Image src={bg2} alt="" className="w-full h-auto" />
+        </div>
+        <div className="relative mb-16 flex justify-start items-center pl-6 ">
+          <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white shadow-lg">
+            <FaArrowDown className="text-2xl text-blue-600" />
+          </div>
+        </div>
       </section>
+      <Services />
     </>
   );
 };

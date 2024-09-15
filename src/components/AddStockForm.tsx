@@ -9,7 +9,7 @@ interface FormProps {
 
 interface NepseData {
   symbol: string;
-  title: string;
+  companyName: string;
   LTP: string;
   changePercent: string;
 }
@@ -24,9 +24,8 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
     companyName: "",
     dividend: "",
   });
-  const [selectTranscation, setSelectTranscation] = useState("");
   const [stocks, setStocks] = useState<NepseData[]>([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     // Fetch stocks from the API
     const fetchStocks = async () => {
@@ -49,18 +48,21 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     const stock: NepseData | undefined = stocks.find(
       (stock) =>
         stock.symbol.toLocaleLowerCase() ===
         formData.selectStock.toLocaleLowerCase()
     );
     if (stock) {
-      formData.companyName = stock.title;
+      formData.companyName = stock.companyName;
     }
-    onSubmit(formData);
-    // close model after submitting form
-    onClose();
-    // onSubmit(formData);
+    try {
+      onSubmit(formData);
+    } finally {
+      setLoading(false);
+      onClose();
+    }
   };
 
   return (
@@ -82,11 +84,11 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
         >
           <option value="">Select transaction type</option>
           <option value="IPO">IPO</option>
-          <option value="Secondary Buy">Secondary Buy</option>
+          <option value="Buy">Secondary Buy</option>
           <option value="Dividend">Dividend</option>
-          <option value="Bonus Share">Bonus Share</option>
+          <option value="Bonus_Share">Bonus Share</option>
           <option value="FPO">FPO</option>
-          <option value="Right">Right</option>
+          <option value="Right_Share">Right</option>
           <option value="Auction">Auction</option>
         </select>
       </div>
@@ -109,7 +111,7 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
           <option value="">Select a stock</option>
           {stocks.map((stock) => (
             <option key={stock.symbol} value={stock.symbol}>
-              {stock.title}
+              {stock.companyName}
             </option>
           ))}
         </select>
@@ -136,26 +138,28 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
               placeholder="Ex. 500"
             />
           </div>
-
-          <div>
-            <label
-              htmlFor="purchasePrice"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Purchase Price (Per Unit)
-            </label>
-            <input
-              type="number"
-              id="purchasePrice"
-              name="purchasePrice"
-              value={formData.purchasePrice}
-              onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              required
-              disabled={!formData.transactionType}
-              placeholder="Ex. Rs.100"
-            />
-          </div>
+          {formData.transactionType.toString().toLocaleLowerCase() !==
+            "bonus_share" && (
+            <div>
+              <label
+                htmlFor="purchasePrice"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Purchase Price (Per Unit)
+              </label>
+              <input
+                type="number"
+                id="purchasePrice"
+                name="purchasePrice"
+                value={formData.purchasePrice}
+                onChange={handleChange}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                required
+                disabled={!formData.transactionType}
+                placeholder="Ex. Rs.100"
+              />
+            </div>
+          )}
         </>
       ) : (
         <div>
@@ -169,7 +173,7 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
             type="number"
             id="dividend"
             name="dividend"
-            value={formData.purchasePrice}
+            value={formData.dividend}
             onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             required
@@ -195,6 +199,7 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           required
           disabled={!formData.transactionType}
+          max={new Date().toISOString().split("T")[0]}
         />
       </div>
 
@@ -203,7 +208,7 @@ const AddStockForm: React.FC<FormProps> = ({ onSubmit, onClose }) => {
           type="submit"
           className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
         >
-          Add Transaction
+          {loading ? "Submitting.." : "Add Transcation"}
         </button>
         <button
           type="button"

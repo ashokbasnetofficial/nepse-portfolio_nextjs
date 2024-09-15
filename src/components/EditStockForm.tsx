@@ -12,7 +12,7 @@ interface FormProps {
   onClose: () => void;
 }
 
-const EditStock: React.FC<FormProps> = ({ onSubmit, onClose }) => {
+const EditStock: React.FC<FormProps> = ({ onSubmit }) => {
   return (
     <div className="flex flex-col space-y-4 p-4 relative">
       <button
@@ -39,7 +39,6 @@ const EditStock: React.FC<FormProps> = ({ onSubmit, onClose }) => {
         <span>Remove</span>
         <FaTrashAlt />
       </button>
-    
     </div>
   );
 };
