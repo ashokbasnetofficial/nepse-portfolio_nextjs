@@ -8,19 +8,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors:{
-          'bright-red': '#FF0000'
+      colors: {
+        "bright-red": "#FF0000",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      screens:{
-         'xs': '360px'
-      }
+      screens: {
+        xs: "360px",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwind-scrollbar")({ nocompatible: true }), 
+  ],
 };
 export default config;

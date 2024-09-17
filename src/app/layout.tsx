@@ -5,10 +5,10 @@ import Navbar from "@/components/Navbar";
 import Providers from "@/redux/Provider";
 import Footer from "@/components/UI/Footer";
 import { Toaster } from "sonner";
+import { usePathname } from "next/navigation";
 import { SessionProvider } from "next-auth/react"; // Import SessionProvider
-
+import ResponsiveMain from "@/components/ResponsiveMain";
 const inter = Mandali({ weight: "400", subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "Mero Portfolio",
   description:
@@ -31,10 +31,10 @@ export default function RootLayout({
           {/* Wrap content with SessionProvider */}
           <Navbar />
           <Providers>
-            <main>
+            <ResponsiveMain>
               {children}
               <Toaster />
-            </main>
+            </ResponsiveMain>
           </Providers>
           <Footer />
         </SessionProvider>

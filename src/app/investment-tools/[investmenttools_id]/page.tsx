@@ -8,14 +8,16 @@ import FDForm from "@/components/FDForm";
 import { useSelector } from "react-redux";
 import shareSellSummary from "@/interfaces/shareSellInterface";
 import { BuyShareResult } from "@/interfaces/shareBuyInterface";
-import { EMISummary } from "@/interfaces/emiInterface";
+import { EMIBreakDown, EMISummary } from "@/interfaces/emiInterface";
 import { FDSummary } from "@/interfaces/fdInterface";
-import { SIPOut } from "@/interfaces/sipInterface";
+import { SIPBreakDown, SIPOut } from "@/interfaces/sipInterface";
 import { resultLabels } from "@/utils/calculatorResultLabel";
 import { formatNumber } from "@/utils/numFormatter";
 import Error404 from "@/components/UI/Error";
 import DividendForm from "@/components/DividentForm";
 import { DividendSummary } from "@/interfaces/dividendInterface";
+import BreakDownEMI from "@/components/BreakDownEMI";
+import BreakDownSIP from "@/components/BreakDownSIP";
 const InvestmentToolsCalculator = ({
   params,
 }: {
@@ -33,6 +35,9 @@ const InvestmentToolsCalculator = ({
   const dividend_result: DividendSummary = useSelector(
     (state: any) => state.dividend
   );
+  const emiMonthlyBreakdown: EMIBreakDown[] = emi_result.EMIBreakDown;
+  const spiMonthlyBreakDown: SIPBreakDown[] = sip_result.SIPBreakDown;
+  console.log(spiMonthlyBreakDown);
   const { investmenttools_id } = params;
   const formComponents: any = {
     "sip-calculator": SIPForm,
@@ -110,7 +115,8 @@ const InvestmentToolsCalculator = ({
                     <p className="md:text-xl track">{labels[index]}</p>
                     <p className="lg:text-3xl md:text-2xl sm:text-xl font-bold mb-2">
                       {typeof results[key] !== "string" &&
-                      results[key] !== undefined && labels[index].toLowerCase()!=='receiveable bonus'
+                      results[key] !== undefined &&
+                      labels[index].toLowerCase() !== "receiveable bonus"
                         ? `Rs. ${formatNumber(results[key])}`
                         : `${results[key]}`}
                     </p>
@@ -122,6 +128,20 @@ const InvestmentToolsCalculator = ({
                 ))}
               </div>
             </div>
+            {emiMonthlyBreakdown &&
+              investmenttools_id.toLowerCase() === "loan-calculator" && (
+                <BreakDownEMI
+                  investmenttools_id={investmenttools_id}
+                  monthlybreakdowns={emiMonthlyBreakdown}
+                />
+              )}
+            {spiMonthlyBreakDown &&
+              investmenttools_id.toLowerCase() === "sip-calculator" && (
+                <BreakDownSIP
+                  investmenttools_id={investmenttools_id}
+                  monthlybreakdowns={spiMonthlyBreakDown}
+                />
+              )}
           </div>
         </>
       )}

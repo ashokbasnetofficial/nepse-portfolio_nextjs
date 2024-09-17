@@ -5,7 +5,7 @@
 .transcation_summary_title {
   width: 100%;
   padding-bottom: 1.5rem;
-  padding-top:1rem;
+  padding-top: 1rem;
 }
 .transcation_summary_title h1 {
   text-align: center;
@@ -24,4 +24,11 @@
   border-bottom: 2px solid #0031ac;
   background-color: #ffffff;
   width: 100% !important;
+}
+.chart_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }

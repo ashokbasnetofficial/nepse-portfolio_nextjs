@@ -5,35 +5,24 @@ import classes from "@/app/my-portfolio/MyProfile.module.css";
 import TranscationHistory from "@/components/UI/TranscationHistory";
 import { useEffect, useState } from "react";
 import useFetch from "@/hooks/use-fetch";
-import { StockResult } from "@/interfaces/stockInterface";
-const stock = {
-  symbol: "AAPL",
-  LTP: 150.25,
-  CH: {
-    absolute: 5.5,
-    percentage: 3.8,
-  },
-  currentUnits: 100,
-  soldUnits: 0,
-  investment: 15000,
-  WACC: 148.5,
-  soldValue: 0,
-  estimatedProfit: 380.75,
-  currentValue: 15250,
-  dividend: 500,
-  todayGain: 0,
-  current_investment: 15000,
-  real_Gain: 0,
-  unrealGain: 380.75,
-  receiveable_Amount: 200,
-  profit: 2.5,
-};
+import { StockResult, StockTransaction } from "@/interfaces/stockInterface";
+import { Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(CategoryScale, LinearScale, ArcElement, Tooltip, Legend);
 
 const StockTranscationDetailPage = ({ params }: { params: { id: string } }) => {
   const { error, loading, sendRequest: fetchStock } = useFetch();
   const [stockSummary, setStockSummary] = useState<StockResult | null>(null);
-  console.log(stockSummary);
   const { id } = params;
+
   useEffect(() => {
     console.log("Component mounted or updated");
     fetchStock(
@@ -46,27 +35,75 @@ const StockTranscationDetailPage = ({ params }: { params: { id: string } }) => {
         setStockSummary(data);
       }
     );
-  }, [id]);
+  }, [id, fetchStock]);
+
   const handleTranscation = () => {};
+
+  const doughnutChartData = {
+    labels: ["Unrealized Gain", "Realized Gain", "Investment"],
+    datasets: [
+      {
+        data: [
+          stockSummary?.unrealGain || 0,
+          stockSummary?.real_Gain || 0,
+          stockSummary?.current_investment || 0,
+        ],
+        backgroundColor: ["#FFCE56", "#FF6384", "#1e40af"],
+        hoverOffset: 4,
+      },
+    ],
+  };
+
   return (
     <>
-      <div className="mt-5 w-full flex flex-col items-center mb-4 px-40">
-        <AddStockButton onClick={handleTranscation} title="Add Transcation" />
-        <div className={classes.transcation_summary_title}>
-          <h1>Stock Summary</h1>
+      <div className="mt-6 flex justify-end">
+      <AddStockButton onClick={handleTranscation} title="Add Transaction" />
+      </div>
+      <div className="w-full flex flex-col items-center justify-center mb-4">
+        <div className={`${classes.transcation_summary_title} w-full`}>
+          <h1 className="text-center text-sm sm:text-xl lg:text-2xl font-semibold">
+            Stock Summary
+          </h1>
         </div>
+
         {stockSummary && (
-          <SingleStockSummary stock={stockSummary} onClick={() => null} />
+          <SingleStockSummary
+            stock={stockSummary}
+            onClick={() => null}
+          />
         )}
-        <div className={classes.transcation_summary_title}>
-          <h1>Transcation History</h1>
+        <div className={`${classes.transcation_summary_title} w-full`}>
+          <h1 className="text-center text-lg sm:text-xl lg:text-2xl font-semibold">
+            Chart
+          </h1>
         </div>
-        {stockSummary?.transactions &&
-          stockSummary.transactions.map((transcation) => (
-            <TranscationHistory transcation={transcation} />
-          ))}
+
+        {stockSummary && (
+          <div className="w-full max-w-md lg:max-w-lg">
+            <Doughnut data={doughnutChartData} />
+          </div>
+        )}
+
+        {/* Transaction History Section */}
+        <div className={`${classes.transcation_summary_title} w-full`}>
+          <h1 className="text-center text-lg sm:text-xl lg:text-2xl font-semibold">
+            Transaction History
+          </h1>
+        </div>
+
+        <div className="w-full">
+          {stockSummary?.transactions &&
+            stockSummary.transactions.map((transcation: StockTransaction) => (
+              <TranscationHistory
+                key={transcation._id}
+                transcation={transcation}
+               
+              />
+            ))}
+        </div>
       </div>
     </>
   );
 };
+
 export default StockTranscationDetailPage;

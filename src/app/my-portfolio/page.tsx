@@ -90,7 +90,7 @@ const MyProfilePage = () => {
           Loading...
         </p>
       ) : (
-        <div className="mt-5 w-full flex flex-col items-end mb-4">
+        <div className="mt-5 w-full flex flex-col items-end">
           <p>{session?.user?.name}</p>
           <AddStockButton onClick={toggleModal} title="Add Stock" />
           <StockSummary />

@@ -67,6 +67,7 @@ const LandingUI = () => {
           </div>
         </div>
       </section>
+      <hr/>
       <Services />
     </>
   );

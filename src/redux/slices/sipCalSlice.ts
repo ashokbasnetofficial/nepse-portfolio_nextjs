@@ -1,10 +1,13 @@
 "use client";
 import { createSlice } from "@reduxjs/toolkit";
 import { SIPOut } from "@/interfaces/sipInterface";
+import { calculateSIPBreakdown } from "@/utils/calculateSIPBreakDown";
+
 const initialState: SIPOut = {
   total_investment: 0,
   estimated_return: 0,
   estimated_total_return: 0,
+  SIPBreakDown: [],
 };
 
 const sipCalculatorSlice = createSlice({
@@ -46,16 +49,21 @@ const sipCalculatorSlice = createSlice({
 
       const totalPayments = periodsPerYear * total_investment_period;
       const total_investment_amount = investment_amount * totalPayments;
-
+      const breakdown = calculateSIPBreakdown(
+        investment_period_type,
+        investment_amount,
+        annual_return,
+        total_investment_period
+      );
       const futureValue =
         investment_amount *
         ((Math.pow(1 + periodicRate, totalPayments) - 1) / periodicRate) *
         (1 + periodicRate);
       const total_gain = futureValue - total_investment_amount;
-
       state.total_investment = total_investment_amount;
       state.estimated_return = total_gain;
       state.estimated_total_return = futureValue;
+      state.SIPBreakDown = breakdown;
     },
   },
 });
