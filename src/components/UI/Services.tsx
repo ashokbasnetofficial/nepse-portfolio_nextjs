@@ -8,9 +8,9 @@ import Image from "next/image";
 const Services = () => {
   return (
     <>
-      <div className="w-full mt-20">
+      <div className="w-full mt-20 mb-20">
         <h5 className="text-center text-blue-950 mb-4 text-2xl sm:text-3xl md:text-4xl font-bold">
-          We are Better, Here is Why
+         Awesome Feautres
         </h5>
         <p className="text-center max-w-md sm:max-w-lg md:max-w-xl mx-auto text-gray-500 text-sm sm:text-base md:text-lg">
           A Private Limited is the most popular type of partnership in Malta.
@@ -30,6 +30,7 @@ const Services = () => {
                   height={250}
                   alt="service image"
                   className="mb-12"
+                  priority
                 />
               </div>
               <h4 className="font-extrabold mt-4 mb-2 text-blue-950 text-xl">
@@ -54,6 +55,7 @@ const Services = () => {
                   height={250}
                   alt="service image"
                   className="mb-12"
+                  priority
                 />
               </div>
               <h4 className="font-extrabold mt-4 mb-2 text-blue-950 text-xl">
@@ -78,6 +80,7 @@ const Services = () => {
                   height={250}
                   alt="service image"
                   className="mb-12"
+                  priority
                 />
               </div>
               <h4 className="font-extrabold mt-4 mb-2 text-blue-950 text-xl">

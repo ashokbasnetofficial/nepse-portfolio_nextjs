@@ -5,15 +5,14 @@ import bg2 from "../../../public/images/hero-1-bottom-shape.png";
 import googleIcon from "../../../public/images/google.png";
 import bg3 from "../../../public/images/hero-1-bg.png";
 import { FaArrowDown } from "react-icons/fa6";
-import Link from "next/link";
-import classes from "@/components/UI/LandingPage.module.css";
+import AppInfo from "./AppInfo";
 
 const LandingUI = () => {
   return (
     <>
       <section
         id="home"
-        className="relative bg-blue-600 overflow-hidden bg-cover w-full"
+        className="relative bg-blue-600 overflow-hidden bg-cover w-full h-screen"
         style={{
           backgroundImage: `url(${bg3.src})`,
           backgroundSize: "cover",
@@ -54,7 +53,7 @@ const LandingUI = () => {
               </div>
             </div>
             <div className="lg:ms-auto mx-auto z-10">
-              <Image src={bg1} alt="" className="w-full h-auto" />
+              <Image src={bg1} alt="" className="h-auto" />
             </div>
           </div>
         </div>
@@ -67,8 +66,10 @@ const LandingUI = () => {
           </div>
         </div>
       </section>
-      <hr/>
+      <hr />
       <Services />
+      <hr />
+      <AppInfo />
     </>
   );
 };

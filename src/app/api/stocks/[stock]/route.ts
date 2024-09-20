@@ -101,3 +101,29 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+// remove stock 
+export async function DELETE(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  let symbol = pathname.split("/").pop();
+  
+  if (symbol) {
+    symbol = symbol.toUpperCase();
+    console.log("Fetched symbol:", symbol);
+  } else {
+    return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
+  }
+
+  try {
+    await dbConnect();
+    const stock = await Stock.deleteOne({ symbol: symbol });
+
+    if (stock.deletedCount === 0) {
+      return NextResponse.json({ error: "Stock not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Stock deleted successfully" }, { status: 200 });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Error deleting stock" }, { status: 500 });
+  }
+}
